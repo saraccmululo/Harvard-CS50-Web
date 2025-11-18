@@ -1,0 +1,140 @@
+.header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+.adv-header{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px 20px;
+    border-bottom: 1px solid #dadce0;
+}
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar {
+    display: flex;
+    padding: 10px;
+    margin: 10px;
+    gap: 15px;
+}
+.navbar a {
+    font-family: arial, sans-serif;
+    font-size: 13px;
+    line-height: 24px;
+    text-decoration: none;
+    color: #333;
+}
+.navbar a:hover{
+    text-decoration: underline;
+}
+
+.adv-header h3 {
+    margin-top: 5px;   /* reduce space */
+    margin-bottom: 0;
+    color: #D93025;
+    font-weight: 300;
+    font-family: arial, sans-serif;
+}
+
+h4{
+    color:#333;
+    font-family: arial, sans-serif;
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+    gap: 40px;
+}
+.logo{
+    max-width: 300px;
+    height: auto;
+}
+.logo_small{
+    width: 70px;
+    height: auto;
+}
+.form-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    width: 500px;
+}
+.input {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #dadce0;
+    border-radius: 24px;
+    box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+    outline: none;
+}
+
+.btn-input {
+    background-color: #f8f9fa;
+    border: 1px solid #f8f9fa;
+    border-radius: 4px;
+    color: #3c4043;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 11px 4px;
+    padding: 0 16px;
+    height: 36px;
+    cursor: pointer;
+}
+.main-container {
+    margin: 30px;
+    padding: 20px;
+}
+.adv-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap:15px;
+    width: 800px;
+}
+.adv-row {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+}
+.adv-container label{
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    color: #333;
+    width: 300px;
+}
+
+.adv-input {
+    width: 100%;
+    padding: 6px 15px;
+    font-size: 12px;
+    border: 1px solid #dadce0;
+    box-sizing: border-box;
+}
+
+.adv-btn {
+    background-color: #4285F4;
+    color: white;
+    padding:10px 15px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    border: none
+}
+.adv-btn:hover {
+    background-color: #357ae8;
+}
+.adv-btn-row {
+    width: 57%;
+    display: flex;
+    justify-content: flex-end;
+}
