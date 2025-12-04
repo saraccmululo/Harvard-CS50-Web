@@ -1,0 +1,27 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+{% if user.is_authenticated %}
+<div>
+	<h3>New Post</h3>
+	<form action="{% url 'create' %}" method="POST">
+			{% csrf_token %}
+			<textarea name="content" id="content" rows="3" class="form-control" required></textarea>
+			<button type="submit" class="btn btn-primary btn-small">Post</button>
+	</form>
+</div>
+{% endif %}
+
+<div>
+	<div>
+			{% for post in posts %}
+			<div>
+				<h5>{{post.user.username}}</h5>
+				<p>{{post.content}}</p>
+				<small>{{post.timestamp}}</small>
+			</div>   
+			{% endfor %}
+	</div>
+</div>
+
+{% endblock %}
