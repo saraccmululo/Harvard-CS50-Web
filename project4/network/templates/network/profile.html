@@ -1,13 +1,18 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
+<div class="container mt-4">
 <h2>{{ current_profile.username }}</h2>
 
-<div class="container">
-  <div class="row d-flex justify-content-center">
-    <p><strong>{{ followers_count }}</strong>Followers</p>
-    <p><strong>{{ following_count }}</strong>Following</p>
-  </div>
+<div class="d-flex gap-2 mb-3">
+  <div class="d-flex flex-column align-items-center border rounded px-2 py-1">
+    <p class="mb-1"><strong>{{ followers_count }}</strong></p>
+    <p class="text-muted mb-0 small">Followers</p>
+    </div>
+    <div class="d-flex flex-column align-items-center border rounded px-2 py-1">
+      <p class="mb-1"><strong>{{ following_count }}</strong></p>
+      <p class="text-muted mb-0 small">Following</p>
+    </div>
 </div>
 
 
@@ -23,29 +28,31 @@
   {% endif %}
 <hr>
 
-<h4>Posts</h4>
+<h5><strong>Posts</strong></h5>
 
 {% for post in posts_page %}
-<div class="post-box mt-3 p-3 border rounded" id="post-{{ post.id }}">
+<div class="post-box mt-3 p-3 border rounded bg-white shadow-sm" id="post-{{ post.id }}">
   <p id="post-content-{{ post.id }}">{{ post.content }}</p>
   <small>{{ post.timestamp }}</small>
  
   {% if user.is_authenticated and user == post.user %}
-		<button class="btn btn-sm btn-outline-secondary edit-btn" data-id="{{ post.id }}">📝</button>
+		<button class="edit-btn btn btn-link p-0" data-id="{{ post.id }}">📝</button>
 	{% endif %}
 
-	{% if user.is_authenticated %}
-	<button class="btn-like" data-id="{{ post.id }}">
+	
+	<button class="btn-like btn btn-link p-0" data-id="{{ post.id }}" {% if not user.is_authenticated %}disabled{% endif %}>
     <span class="heart-icon">
-        {% if post.liked %}
+        {% if user.is_authenticated and post.liked %}
             ❤️
         {% else %}
             🤍
         {% endif %}
     </span>
+    {% if post.likes_count > 0 %}
     <span class="like-count">{{ post.likes_count }}</span>
-</button>
-{% endif %}
+    {% endif %}
+  </button>
+
 </div>
 
 {% empty %}
@@ -62,5 +69,5 @@
 		{% endif %}
 	</ul>
 </nav>
-
+</div>
 {% endblock %}

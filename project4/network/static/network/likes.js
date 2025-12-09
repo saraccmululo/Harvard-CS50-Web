@@ -16,15 +16,25 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
         // Find the heart and like-count span in the button
         const heart= button.querySelector(".heart-icon");
-        const likeCount= button.querySelector(".like-count");
-
+        
         if(heart) {
           heart.textContent=data.liked? "❤️":"🤍";
         }
-        if (likeCount){
-          likeCount.textContent=data.likes_count
+
+        let likeCount= button.querySelector(".like-count");
+
+        if (data.likes_count>0){
+          // If the span doesn't exist yet, create it
+          if (!likeCount) {
+            likeCount=document.createElement("span");
+            likeCount.className="like-count";
+            button.appendChild(likeCount);
+          }
+          likeCount.textContent=data.likes_count;
+        } else {
+          //Remove span if count =0
+          if(likeCount) likeCount.remove();
         }
-      
       } catch (error) {
         console.error("Error liking/unliking post:", error);
       }

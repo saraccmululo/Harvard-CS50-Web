@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.core.paginator import Paginator
 import json
+from django.db.models import Count
 from .models import User, Post, Follow, Like
 
 def index(request):
@@ -31,9 +32,15 @@ def index(request):
       )
       return redirect("index")
   
-  # get request
-  all_posts=Post.objects.all().order_by("-timestamp")
-
+  all_posts=Post.objects.annotate(likes_count=Count('likes_received')).order_by("-timestamp")
+  
+  # Add a "liked" attribute for each post
+  for post in all_posts:
+    if request.user.is_authenticated:
+      post.liked = post.likes_received.filter(user=request.user).exists()
+    else:
+        post.liked = False
+      
   #pagination
   paginator=Paginator(all_posts, 10)
   page_number = request.GET.get('page')
@@ -44,9 +51,16 @@ def index(request):
   })
 
 def profile(request, username):
-  #display current profile posts
+  #display current profile posts (including like counts)
   current_profile=User.objects.get(username=username)
-  user_posts=Post.objects.filter(user=current_profile).order_by("-timestamp")
+  user_posts=Post.objects.filter(user=current_profile).annotate(likes_count=Count('likes_received')).order_by("-timestamp")
+
+# Add a "liked" attribute for each post
+  for post in user_posts:
+    if request.user.is_authenticated:
+      post.liked = post.likes_received.filter(user=request.user).exists()
+    else:
+        post.liked = False
 
   #filter follow for that profile
   following=Follow.objects.filter(follower=current_profile)
@@ -70,7 +84,6 @@ def profile(request, username):
   posts_page = paginator.get_page(page_number)
 
   return render(request, "network/profile.html", {
-    "posts": user_posts,
     "posts_page": posts_page,
     "current_profile": current_profile,
     "following_count": following.count(),
@@ -111,8 +124,12 @@ def following_feed(request):
   for f in following_objs:
     following_profiles.append(f.following)
 
-  #get all the posts from those profiles 
-  posts=Post.objects.filter(user__in=following_profiles).order_by("-timestamp") #user__in = SQL WHERE user_id IN (...).
+  #get all the posts from those profiles (including like counts) 
+  posts=Post.objects.filter(user__in=following_profiles).annotate(likes_count=Count('likes_received')).order_by("-timestamp") #user__in = SQL WHERE user_id IN (...).
+
+  # Add a "liked" attribute for each post
+  for post in posts:
+    post.liked = post.likes_received.filter(user=request.user).exists()
 
   #pagination
   paginator=Paginator(posts, 10)
@@ -183,7 +200,6 @@ def toggle_like(request, post_id):
     }, status=200)
   
   return JsonResponse({"error": "PUT request required."}, status=400)
-
 
 
 def login_view(request):

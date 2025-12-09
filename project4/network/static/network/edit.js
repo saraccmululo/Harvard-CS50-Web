@@ -11,7 +11,7 @@ const editMode =(postId, button)=> {
   p.replaceWith(textarea);
 
   //change button name from 'edit' to 'save'
-  button.textContent="Save";
+  button.textContent="💾";
 
   //change button behavior to save
   button.onclick=()=> saveEdit(postId, button, textarea,);
@@ -46,7 +46,7 @@ const saveEdit = async (postId, button, textarea)=>{
     textarea.replaceWith(p);
 
     //Restore button to "Edit"
-    button.textContent="Edit";
+    button.textContent="📝";
 
     //Restore original button behavior
     button.onclick=()=> editMode(postId, button);
