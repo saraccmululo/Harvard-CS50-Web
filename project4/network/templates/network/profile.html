@@ -6,12 +6,12 @@
 
 <div class="d-flex gap-2 mb-3">
   <div class="d-flex flex-column align-items-center border rounded px-2 py-1">
-    <p class="mb-1"><strong>{{ followers_count }}</strong></p>
-    <p class="text-muted mb-0 small">Followers</p>
+    <p class="mb-1"><strong>👥 {{ followers_count }}</strong></p>
+    <p class="text-muted mb-0">Followers</p>
     </div>
     <div class="d-flex flex-column align-items-center border rounded px-2 py-1">
-      <p class="mb-1"><strong>{{ following_count }}</strong></p>
-      <p class="text-muted mb-0 small">Following</p>
+      <p class="mb-1"><strong>👥 {{ following_count }}</strong></p>
+      <p class="text-muted mb-0">Following</p>
     </div>
 </div>
 
@@ -20,9 +20,9 @@
   <form action="{% url 'toggle_follow' current_profile.username %}" method="POST">
     {% csrf_token %}
     {% if is_following %}
-      <button class="btn btn-outline-danger" type="submit">Unfollow</button>
+      <button class="btn btn-outline-danger btn-sm" type="submit">Unfollow</button>
     {% else %}
-      <button class="btn btn-outline-primary" type="submit">Follow</button>
+      <button class="btn btn-outline-primary btn-sm" type="submit">Follow</button>
     {% endif %}
   </form>
   {% endif %}
